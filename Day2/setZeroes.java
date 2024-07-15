@@ -1,29 +1,28 @@
-import java.util.HashSet;
-import java.util.Set;
-
 class Solution {
     public void setZeroes(int[][] matrix) {
-        Set<Integer> rows = new HashSet<>();
-        Set<Integer> cols = new HashSet<>();
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        boolean[][] isOriginalZero = new boolean[rows][cols];
 
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
                 if (matrix[i][j] == 0) {
-                    rows.add(i);
-                    cols.add(j);
+                    isOriginalZero[i][j] = true;
                 }
             }
         }
 
-        for (int row : rows) {
-            for (int j = 0; j < matrix[0].length; j++) {
-                matrix[row][j] = 0;
-            }
-        }
-
-        for (int col : cols) {
-            for (int i = 0; i < matrix.length; i++) {
-                matrix[i][col] = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (isOriginalZero[i][j]) {
+                    // Set the entire row to zero
+                    for (int c = 0; c < cols; c++) {
+                        matrix[i][c] = 0;
+                    }
+                    for (int r = 0; r < rows; r++) {
+                        matrix[r][j] = 0;
+                    }
+                }
             }
         }
     }
